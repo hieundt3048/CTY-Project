@@ -1,26 +1,114 @@
 @import "tailwindcss";
 
+/* ===== Brand Color Tokens ===== */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --color-navy: #1F3A5F;
+  --color-gold: #C9A15A;
+  --color-navy-light: #2d5491;
+  --color-gold-light: #d9b47a;
+  --color-text: #2B2B2B;
+  --color-text-muted: #6B7280;
+  --color-bg: #FFFFFF;
+  --color-bg-alt: #F7F7F7;
+  --color-placeholder: #E5E5E5;
+  --color-border: #E5E7EB;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-navy: var(--color-navy);
+  --color-gold: var(--color-gold);
+  --color-navy-light: var(--color-navy-light);
+  --color-gold-light: var(--color-gold-light);
+  --color-text-brand: var(--color-text);
+  --color-bg-alt: var(--color-bg-alt);
+  --font-sans: var(--font-noto-sans), ui-sans-serif, "Noto Sans SC",
+    "Noto Sans KR", system-ui, sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ===== Base Styles ===== */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ===== Typography Scale ===== */
+h1 {
+  font-size: clamp(1.875rem, 4vw, 3rem);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+h3 {
+  font-size: clamp(1.125rem, 2vw, 1.5rem);
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+/* ===== Focus Styles (Accessibility) ===== */
+:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* ===== Scrollbar (subtle) ===== */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-bg-alt);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-navy);
+  border-radius: 3px;
+}
+
+/* ===== Utility Classes ===== */
+.container-site {
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  .container-site {
+    padding-inline: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container-site {
+    padding-inline: 3rem;
+  }
+}
+
+/* Section spacing */
+.section-py {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
+@media (min-width: 1024px) {
+  .section-py {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
 }

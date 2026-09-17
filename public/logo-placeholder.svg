@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 60" fill="none">
+  <!-- Background -->
+  <rect width="200" height="60" rx="4" fill="white"/>
+  
+  <!-- Vertical accent bar -->
+  <rect x="0" y="0" width="4" height="60" fill="#C9A15A" rx="2"/>
+  
+  <!-- "NDTH" main text -->
+  <text x="16" y="32" font-family="Arial, sans-serif" font-size="24" font-weight="700" letter-spacing="-1" fill="#1F3A5F">NDTH</text>
+  
+  <!-- Tagline -->
+  <text x="16" y="50" font-family="Arial, sans-serif" font-size="9" font-weight="500" letter-spacing="2" fill="#C9A15A" text-transform="uppercase">GIA CÔNG BALO</text>
+</svg>

@@ -1,36 +1,137 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Website Công Ty TNHH Nguyễn Dương Trung Hiếu
 
-## Getting Started
+Website giới thiệu năng lực gia công balo – túi xách, phục vụ B2B.
+Hỗ trợ 4 ngôn ngữ: 🇻🇳 Tiếng Việt · 🇬🇧 English · 🇨🇳 中文 · 🇰🇷 한국어
 
-First, run the development server:
+## Tech Stack
+
+- **Framework**: Next.js 16 (App Router, TypeScript)
+- **Styling**: Tailwind CSS v4
+- **i18n**: next-intl (4 locales: vi, en, zh, ko)
+- **Form validation**: react-hook-form + zod
+- **Email**: Resend
+- **Icons**: lucide-react
+
+---
+
+## Chạy Local (Development)
+
+### 1. Cài dependencies
+
+```bash
+npm install
+```
+
+### 2. Tạo file biến môi trường
+
+```bash
+cp .env.example .env.local
+```
+
+Mở `.env.local` và điền:
+
+| Biến | Mô tả |
+|------|-------|
+| `RESEND_API_KEY` | API key từ [resend.com](https://resend.com/api-keys) |
+| `EMAIL_NHAN_LIEN_HE` | Email nhận yêu cầu liên hệ |
+
+> **Lưu ý dev:** Nếu chưa có API key, form vẫn hoạt động ở chế độ "DEV mode" (dữ liệu in ra console, không gửi email thật).
+
+### 3. Chạy dev server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Mở [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Cấu trúc Dự Án
 
-## Learn More
+```
+website/
+├── app/
+│   ├── [locale]/
+│   │   ├── page.tsx                    ← Trang chủ
+│   │   ├── gioi-thieu/page.tsx         ← Về chúng tôi
+│   │   ├── dich-vu/page.tsx            ← Dịch vụ
+│   │   ├── nang-luc-san-xuat/page.tsx  ← Năng lực sản xuất
+│   │   ├── du-an/page.tsx              ← Portfolio
+│   │   ├── lien-he/page.tsx            ← Liên hệ
+│   │   └── layout.tsx
+│   ├── api/contact/route.ts            ← API gửi email
+│   ├── sitemap.ts
+│   └── robots.ts
+├── components/
+│   ├── ui/                             ← Shared components
+│   ├── Header.tsx, Footer.tsx
+│   ├── LanguageSwitcher.tsx
+│   ├── HeroSection.tsx, StatsBlock.tsx
+│   ├── Gallery.tsx, ContactForm.tsx, MapEmbed.tsx
+├── messages/                           ← Nội dung đa ngôn ngữ
+│   ├── vi.json, en.json, zh.json, ko.json
+├── lib/
+│   ├── config.ts                       ← ⭐ TẤT CẢ placeholder tập trung đây
+│   ├── routing.ts, i18n.ts, utils.ts
+└── public/
+    ├── images/portfolio/               ← Đặt ảnh sản phẩm thật vào đây
+    └── logo-placeholder.svg
+```
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Cập nhật Placeholder
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Tất cả placeholder tập trung tại `lib/config.ts`. Tìm `[[TEN_PLACEHOLDER]]` và thay bằng giá trị thật.
 
-## Deploy on Vercel
+| Placeholder | Mô tả |
+|-------------|-------|
+| `[[SO_DIEN_THOAI]]` | Số điện thoại công ty |
+| `[[SO_ZALO]]` | Số Zalo |
+| `[[EMAIL_CONG_TY]]` | Email công ty |
+| `[[MA_SO_THUE]]` | Mã số thuế |
+| `[[TEN_GIAO_DICH_QUOC_TE]]` | Tên giao dịch quốc tế |
+| `[[SO_CHUYEN_MAY]]` | Số chuyền may |
+| `[[CONG_SUAT_THANG]]` | Công suất sản xuất/tháng |
+| `[[MOQ_SO_LUONG]]` | Số lượng đặt hàng tối thiểu |
+| `[[XAC_NHAN_CO_NHAN_IN_THEU_KHONG]]` | Xác nhận dịch vụ in/thêu |
+| `[[RESEND_API_KEY]]` | API key Resend (trong `.env.local`) |
+| `[[EMAIL_NHAN_LIEN_HE]]` | Email nhận liên hệ (trong `.env.local`) |
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Thêm ảnh Portfolio thật
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Đặt ảnh vào `/public/images/portfolio/` (xem README trong thư mục đó)
+2. Mở `app/[locale]/du-an/page.tsx`
+3. Tìm `portfolioItems` và thêm `src: "/images/portfolio/ten-file.jpg"`
+
+---
+
+## Build Production
+
+```bash
+npm run build && npm run start
+```
+
+---
+
+## Deploy lên Render
+
+1. Push code lên GitHub (`git push origin main`)
+2. Tạo **Web Service** trên Render, kết nối repo
+3. Cấu hình:
+   - Build: `npm install && npm run build`
+   - Start: `npm run start`
+4. Thêm env vars: `RESEND_API_KEY`, `EMAIL_NHAN_LIEN_HE`
+5. Render tự deploy khi push code
+
+### Gắn domain chính thức
+`ctytnnhhnguyenduongtrunghieu.com` → Render Dashboard → Settings → Custom Domains
+
+---
+
+## Ghi chú
+
+- **URL mặc định**: `/` = `/vi/`, `/en/about`, `/zh/about`, `/ko/about`
+- **Google Maps**: tọa độ `11.0593887, 106.3289744` (Phường Gò Dầu, Tây Ninh)
+- **Form**: Chạy ở chế độ DEV (log console) khi chưa có `EMAIL_NHAN_LIEN_HE` thật
