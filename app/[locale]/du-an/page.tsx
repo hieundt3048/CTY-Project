@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
-import Link from "next/link";
+import { Link } from "@/lib/navigation";
 import { ArrowRight } from "lucide-react";
 import SectionWrapper from "@/components/ui/SectionWrapper";
 import Gallery, { type GalleryItem } from "@/components/Gallery";
@@ -21,9 +21,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function PortfolioPage({ params }: Props) {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "portfolio" });
-
-  const localePath = (href: string) =>
-    locale === "vi" ? href : `/${locale}${href}`;
 
   /**
    * PORTFOLIO ITEMS
@@ -84,7 +81,7 @@ export default async function PortfolioPage({ params }: Props) {
         <div className="text-center">
           <h2 className="text-[#1F3A5F] mb-3">{t("contactCta")}</h2>
           <Link
-            href={localePath("/lien-he")}
+            href="/lien-he"
             className="inline-flex items-center gap-2 bg-[#C9A15A] text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-[#d9b47a] transition-colors mt-4"
           >
             {t("contactButton")}

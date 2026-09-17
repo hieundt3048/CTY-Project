@@ -1,13 +1,9 @@
-import Link from "next/link";
-import { useTranslations, useLocale } from "next-intl";
+import { Link } from "@/lib/navigation";
+import { useTranslations } from "next-intl";
 import { ArrowRight, ChevronDown } from "lucide-react";
-import PlaceholderImage from "./ui/PlaceholderImage";
 
 export default function HeroSection() {
   const t = useTranslations("hero");
-  const locale = useLocale();
-  const localePath = (href: string) =>
-    locale === "vi" ? href : `/${locale}${href}`;
 
   return (
     <section className="relative min-h-[85vh] lg:min-h-[90vh] flex items-center bg-[#1F3A5F] overflow-hidden">
@@ -47,14 +43,14 @@ export default function HeroSection() {
           {/* CTA Buttons */}
           <div className="flex flex-wrap gap-4">
             <Link
-              href={localePath("/lien-he")}
+              href="/lien-he"
               className="inline-flex items-center gap-2 bg-[#C9A15A] text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-[#d9b47a] transition-all duration-200 hover:gap-3"
             >
               {t("cta")}
               <ArrowRight className="h-5 w-5" />
             </Link>
             <Link
-              href={localePath("/nang-luc-san-xuat")}
+              href="/nang-luc-san-xuat"
               className="inline-flex items-center gap-2 border-2 border-white/30 text-white px-8 py-4 rounded-lg font-semibold text-lg hover:border-white hover:bg-white/10 transition-all duration-200"
             >
               {t("ctaSecondary")}

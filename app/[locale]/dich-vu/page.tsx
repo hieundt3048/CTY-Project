@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
-import Link from "next/link";
+import { Link } from "@/lib/navigation";
 import { Scissors, Ruler, Printer, ArrowRight, CheckCircle } from "lucide-react";
 import SectionWrapper from "@/components/ui/SectionWrapper";
 
@@ -20,9 +20,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function ServicesPage({ params }: Props) {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "services" });
-
-  const localePath = (href: string) =>
-    locale === "vi" ? href : `/${locale}${href}`;
 
   const services = [
     {
@@ -153,7 +150,7 @@ export default async function ServicesPage({ params }: Props) {
           <h2 className="text-white mb-3">{t("ctaTitle")}</h2>
           <p className="text-gray-300 mb-8 text-lg max-w-xl mx-auto">{t("ctaContent")}</p>
           <Link
-            href={localePath("/lien-he")}
+            href="/lien-he"
             className="inline-flex items-center gap-2 bg-[#C9A15A] text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-[#d9b47a] transition-colors"
           >
             {t("ctaButton")}

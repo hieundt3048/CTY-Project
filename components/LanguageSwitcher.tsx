@@ -1,10 +1,10 @@
 "use client";
 
 import { useLocale } from "next-intl";
-import { usePathname, useRouter } from "next/navigation";
 import { useState, useRef, useEffect } from "react";
 import { ChevronDown } from "lucide-react";
-import { routing } from "@/lib/routing";
+import { routing, Locale } from "@/lib/routing";
+import { usePathname, Link } from "@/lib/navigation";
 
 const localeLabels: Record<string, { label: string; flag: string }> = {
   vi: { label: "VI", flag: "🇻🇳" },
@@ -16,7 +16,6 @@ const localeLabels: Record<string, { label: string; flag: string }> = {
 export default function LanguageSwitcher() {
   const locale = useLocale();
   const pathname = usePathname();
-  const router = useRouter();
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -30,32 +29,6 @@ export default function LanguageSwitcher() {
     document.addEventListener("mousedown", handleClick);
     return () => document.removeEventListener("mousedown", handleClick);
   }, []);
-
-  const switchLocale = (newLocale: string) => {
-    setOpen(false);
-
-    // Tính pathname mới: bỏ locale prefix hiện tại, thêm locale mới
-    let pathWithoutLocale = pathname;
-
-    // Bỏ prefix locale hiện tại
-    for (const loc of routing.locales) {
-      if (pathname.startsWith(`/${loc}/`)) {
-        pathWithoutLocale = pathname.slice(loc.length + 1);
-        break;
-      } else if (pathname === `/${loc}`) {
-        pathWithoutLocale = "/";
-        break;
-      }
-    }
-
-    // Thêm locale mới (nếu không phải default)
-    const newPath =
-      newLocale === routing.defaultLocale
-        ? pathWithoutLocale
-        : `/${newLocale}${pathWithoutLocale === "/" ? "" : pathWithoutLocale}`;
-
-    router.push(newPath);
-  };
 
   const current = localeLabels[locale] ?? localeLabels["vi"];
 
@@ -82,9 +55,11 @@ export default function LanguageSwitcher() {
           {routing.locales.map((loc) => {
             const info = localeLabels[loc];
             return (
-              <button
+              <Link
                 key={loc}
-                onClick={() => switchLocale(loc)}
+                href={pathname}
+                locale={loc as Locale}
+                onClick={() => setOpen(false)}
                 role="option"
                 aria-selected={loc === locale}
                 className={`w-full flex items-center gap-2 px-3 py-2 text-sm transition-colors ${
@@ -95,7 +70,7 @@ export default function LanguageSwitcher() {
               >
                 <span>{info.flag}</span>
                 <span>{info.label}</span>
-              </button>
+              </Link>
             );
           })}
         </div>

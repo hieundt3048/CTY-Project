@@ -1,5 +1,5 @@
-import Link from "next/link";
-import { useTranslations, useLocale } from "next-intl";
+import { Link } from "@/lib/navigation";
+import { useTranslations } from "next-intl";
 import { Phone, Mail, MapPin, MessageCircle } from "lucide-react";
 import { COMPANY_INFO } from "@/lib/config";
 
@@ -15,9 +15,6 @@ const navItems = [
 export default function Footer() {
   const t = useTranslations("footer");
   const tNav = useTranslations("nav");
-  const locale = useLocale();
-  const localePath = (href: string) =>
-    locale === "vi" ? href : `/${locale}${href}`;
 
   return (
     <footer className="bg-[#1F3A5F] text-white">
@@ -46,7 +43,7 @@ export default function Footer() {
               {navItems.map(({ key, href }) => (
                 <li key={key}>
                   <Link
-                    href={localePath(href)}
+                    href={href}
                     className="text-gray-300 text-sm hover:text-[#C9A15A] transition-colors"
                   >
                     {tNav(key)}
@@ -68,33 +65,36 @@ export default function Footer() {
                   {COMPANY_INFO.address}
                 </span>
               </li>
-              {/* TODO: hiển thị sau khi có số điện thoại thật */}
-              <li className="flex items-center gap-2.5">
-                <Phone className="h-4 w-4 text-[#C9A15A] shrink-0" />
-                <a
-                  href={`tel:${COMPANY_INFO.phone}`}
-                  className="text-gray-300 text-sm hover:text-[#C9A15A] transition-colors"
-                >
-                  {COMPANY_INFO.phone}
-                </a>
-              </li>
-              {/* TODO: hiển thị sau khi có số Zalo thật */}
-              <li className="flex items-center gap-2.5">
-                <MessageCircle className="h-4 w-4 text-[#C9A15A] shrink-0" />
-                <span className="text-gray-300 text-sm">
-                  Zalo: {COMPANY_INFO.zalo}
-                </span>
-              </li>
-              {/* TODO: hiển thị sau khi có email thật */}
-              <li className="flex items-center gap-2.5">
-                <Mail className="h-4 w-4 text-[#C9A15A] shrink-0" />
-                <a
-                  href={`mailto:${COMPANY_INFO.email}`}
-                  className="text-gray-300 text-sm hover:text-[#C9A15A] transition-colors"
-                >
-                  {COMPANY_INFO.email}
-                </a>
-              </li>
+              {Boolean(COMPANY_INFO.phone && !COMPANY_INFO.phone.startsWith("[[")) && (
+                <li className="flex items-center gap-2.5">
+                  <Phone className="h-4 w-4 text-[#C9A15A] shrink-0" />
+                  <a
+                    href={`tel:${COMPANY_INFO.phone}`}
+                    className="text-gray-300 text-sm hover:text-[#C9A15A] transition-colors"
+                  >
+                    {COMPANY_INFO.phone}
+                  </a>
+                </li>
+              )}
+              {Boolean(COMPANY_INFO.zalo && !COMPANY_INFO.zalo.startsWith("[[")) && (
+                <li className="flex items-center gap-2.5">
+                  <MessageCircle className="h-4 w-4 text-[#C9A15A] shrink-0" />
+                  <span className="text-gray-300 text-sm">
+                    Zalo: {COMPANY_INFO.zalo}
+                  </span>
+                </li>
+              )}
+              {Boolean(COMPANY_INFO.email && !COMPANY_INFO.email.startsWith("[[")) && (
+                <li className="flex items-center gap-2.5">
+                  <Mail className="h-4 w-4 text-[#C9A15A] shrink-0" />
+                  <a
+                    href={`mailto:${COMPANY_INFO.email}`}
+                    className="text-gray-300 text-sm hover:text-[#C9A15A] transition-colors"
+                  >
+                    {COMPANY_INFO.email}
+                  </a>
+                </li>
+              )}
               <li className="text-gray-400 text-xs mt-1">
                 {t("taxCodeLabel")}: {COMPANY_INFO.taxCode}
               </li>

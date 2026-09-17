@@ -30,9 +30,7 @@
   box-sizing: border-box;
 }
 
-html {
-  scroll-behavior: smooth;
-}
+/* html scroll-behavior handled per element if needed */
 
 body {
   background-color: var(--color-bg);

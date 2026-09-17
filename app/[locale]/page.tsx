@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
-import Link from "next/link";
+import { Link } from "@/lib/navigation";
 import { ArrowRight, Scissors, Ruler, Printer, CheckCircle } from "lucide-react";
 import HeroSection from "@/components/HeroSection";
 import StatsBlock from "@/components/StatsBlock";
@@ -25,9 +25,6 @@ export default async function HomePage({ params }: Props) {
   const tPortfolio = await getTranslations({ locale, namespace: "portfolio" });
   const tContact = await getTranslations({ locale, namespace: "contact" });
   const tCommon = await getTranslations({ locale, namespace: "common" });
-
-  const localePath = (href: string) =>
-    locale === "vi" ? href : `/${locale}${href}`;
 
   const services = [
     {
@@ -84,7 +81,7 @@ export default async function HomePage({ params }: Props) {
         </div>
         <div className="text-center mt-8">
           <Link
-            href={localePath("/dich-vu")}
+            href="/dich-vu"
             className="inline-flex items-center gap-2 text-[#1F3A5F] font-semibold hover:text-[#C9A15A] transition-colors group"
           >
             {t("viewMore")}
@@ -111,7 +108,7 @@ export default async function HomePage({ params }: Props) {
         </div>
         <div className="text-center mt-8">
           <Link
-            href={localePath("/du-an")}
+            href="/du-an"
             className="inline-flex items-center gap-2 bg-[#1F3A5F] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#2d5491] transition-colors"
           >
             {t("viewAllPortfolio")}
@@ -129,7 +126,7 @@ export default async function HomePage({ params }: Props) {
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link
-              href={localePath("/lien-he")}
+              href="/lien-he"
               className="inline-flex items-center gap-2 bg-[#C9A15A] text-white px-8 py-4 rounded-lg font-semibold hover:bg-[#d9b47a] transition-colors"
             >
               {tCommon("contactUs")}

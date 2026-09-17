@@ -1,9 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useTranslations, useLocale } from "next-intl";
+import { Link, usePathname } from "@/lib/navigation";
+import { useTranslations } from "next-intl";
 import { Menu, X, Phone } from "lucide-react";
 import { COMPANY_INFO } from "@/lib/config";
 import LanguageSwitcher from "./LanguageSwitcher";
@@ -19,18 +18,12 @@ const navItems = [
 
 export default function Header() {
   const t = useTranslations("nav");
-  const locale = useLocale();
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  // Tạo đường dẫn locale-aware
-  const localePath = (href: string) =>
-    locale === "vi" ? href : `/${locale}${href}`;
-
   const isActive = (href: string) => {
-    const full = localePath(href);
-    if (href === "/") return pathname === full || pathname === `/${locale}`;
-    return pathname.startsWith(full);
+    if (href === "/") return pathname === "/";
+    return pathname.startsWith(href);
   };
 
   return (
@@ -38,8 +31,7 @@ export default function Header() {
       <div className="container-site">
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo / Wordmark */}
-          <Link href={localePath("/")} className="flex items-center gap-2 shrink-0">
-            {/* TODO: thay bằng <Image> logo thật khi có file logo chính thức */}
+          <Link href="/" className="flex items-center gap-2 shrink-0">
             <div className="flex flex-col leading-none">
               <span className="text-[#1F3A5F] font-bold text-lg tracking-tight">
                 NDTH
@@ -55,7 +47,7 @@ export default function Header() {
             {navItems.map(({ key, href }) => (
               <Link
                 key={key}
-                href={localePath(href)}
+                href={href}
                 className={`px-3 py-2 text-sm font-medium rounded-md transition-colors ${
                   isActive(href)
                     ? "text-[#1F3A5F] bg-[#F7F7F7]"
@@ -69,8 +61,7 @@ export default function Header() {
 
           {/* Right side: Phone + Language + CTA */}
           <div className="hidden lg:flex items-center gap-4">
-            {/* TODO: thay [[SO_DIEN_THOAI]] bằng số điện thoại thật */}
-            {COMPANY_INFO.phone !== "[[SO_DIEN_THOAI]]" && (
+            {Boolean(COMPANY_INFO.phone && !COMPANY_INFO.phone.startsWith("[[")) && (
               <a
                 href={`tel:${COMPANY_INFO.phone}`}
                 className="flex items-center gap-1.5 text-sm text-gray-600 hover:text-[#1F3A5F] transition-colors"
@@ -81,7 +72,7 @@ export default function Header() {
             )}
             <LanguageSwitcher />
             <Link
-              href={localePath("/lien-he")}
+              href="/lien-he"
               className="bg-[#C9A15A] text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-[#d9b47a] transition-colors"
             >
               {t("requestQuote")}
@@ -109,7 +100,7 @@ export default function Header() {
               {navItems.map(({ key, href }) => (
                 <Link
                   key={key}
-                  href={localePath(href)}
+                  href={href}
                   onClick={() => setMobileOpen(false)}
                   className={`px-4 py-3 text-sm font-medium rounded-md transition-colors ${
                     isActive(href)
@@ -122,7 +113,7 @@ export default function Header() {
               ))}
               <div className="pt-3 mt-3 border-t border-gray-100 flex flex-col gap-2">
                 <Link
-                  href={localePath("/lien-he")}
+                  href="/lien-he"
                   onClick={() => setMobileOpen(false)}
                   className="bg-[#C9A15A] text-white px-4 py-3 rounded-md text-sm font-medium text-center hover:bg-[#d9b47a] transition-colors"
                 >

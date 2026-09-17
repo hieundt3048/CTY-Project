@@ -30,13 +30,13 @@ export const COMPANY_INFO = {
   address: "Số nhà 427, Khu phố Chánh, Phường Gò Dầu, Tỉnh Tây Ninh",
 
   // TODO: thay bằng số điện thoại thật khi khách cung cấp
-  phone: "[[SO_DIEN_THOAI]]",
+  phone: "0968928632",
 
   // TODO: thay bằng số Zalo thật khi khách cung cấp
-  zalo: "[[SO_ZALO]]",
+  zalo: "0968928632",
 
   // TODO: thay bằng email công ty thật khi khách cung cấp
-  email: "[[EMAIL_CONG_TY]]",
+  email: "ctytnnhhnguyenduongtrunghieu@gmail.com",
 
   // Tên miền dự kiến
   domain: "ctytnnhhnguyenduongtrunghieu.com",
